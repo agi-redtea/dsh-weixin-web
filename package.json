@@ -1,0 +1,72 @@
+{
+  "name": "dsh-weixin-web",
+  "version": "0.2.0",
+  "description": "TypeScript DSH 微信 iLink 通道：网页扫码、原生会话与内嵌管理界面。",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json",
+    "./client": {
+      "default": "./client.js"
+    }
+  },
+  "files": [
+    "dist",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "qrcode-generator": "^2.0.4"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agi-redtea/dsh-weixin-web.git"
+  },
+  "homepage": "https://github.com/agi-redtea/dsh-weixin-web#readme",
+  "bugs": {
+    "url": "https://github.com/agi-redtea/dsh-weixin-web/issues"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "tsc -p tsconfig.json",
+    "test": "pnpm run build && node --test dist/test/*.mjs",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run check && pnpm test"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "weixin",
+    "wechat",
+    "ilink",
+    "clawbot",
+    "plugin",
+    "bundle"
+  ],
+  "types": "./dist/index.d.mts",
+  "devDependencies": {
+    "jsdom": "^26.1.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "^5.9.3"
+  }
+}
