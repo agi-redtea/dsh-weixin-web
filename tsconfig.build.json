@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "index.mts",
+    "src/**/*.mts"
+  ],
+  "exclude": [
+    "src/client.mts",
+    "test"
+  ]
+}
