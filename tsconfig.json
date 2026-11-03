@@ -16,7 +16,6 @@
   "include": [
     "index.mts",
     "src/**/*.mts",
-    "test/**/*.mts",
-    "src/client.mts"
+    "test/**/*.mts"
   ]
 }

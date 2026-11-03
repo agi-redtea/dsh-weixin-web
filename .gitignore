@@ -10,3 +10,12 @@ coverage/
 .DS_Store
 package-lock.json
 .pnpm-store/
+
+# Runtime state. These files contain bot tokens, session maps, and cursors.
+# They belong in the DSH state directory, never in this repository.
+bots.json
+credentials.json
+session-map*.json
+bufs/
+activity*.json
+updates-buf.json

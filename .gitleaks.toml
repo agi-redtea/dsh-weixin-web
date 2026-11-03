@@ -1,0 +1,12 @@
+title = "dsh-weixin-web"
+
+[extend]
+useDefault = true
+
+# Sequential AES test vector used by media fixtures. It is not a credential.
+[allowlist]
+description = "Deterministic AES test vectors"
+regexTarget = "secret"
+regexes = [
+  '''00112233445566778899aabbccddeeff''',
+]
