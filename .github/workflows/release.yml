@@ -53,6 +53,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh release create "${GITHUB_REF_NAME}" \
-            --title "${GITHUB_REF_NAME}" \
-            --notes-file release-notes.md
+          tag="${GITHUB_REF_NAME}"
+          args=(--title "$tag" --notes-file release-notes.md)
+          # v1.0.0-rc.1 is a prerelease; v1.0.0 is a full release and may be Latest.
+          if [[ "$tag" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-[0-9A-Za-z.-]+$ ]]; then
+            echo "预发布标签 ${tag}：--prerelease --latest=false"
+            args+=(--prerelease --latest=false)
+          else
+            echo "正式标签 ${tag}"
+          fi
+          gh release create "$tag" "${args[@]}"
