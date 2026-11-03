@@ -21,11 +21,15 @@
 
 ### 安装插件
 
-从 GitHub 安装：
+部署时固定到已经发布的版本标签，不要跟踪 `main`：
 
 ```bash
-dsh plugin --profile web add github:agi-redtea/dsh-weixin-web
+dsh plugin --profile web add github:agi-redtea/dsh-weixin-web#v0.3.0
 ```
+
+把 `v0.3.0` 换成目标标签。标签必须已经存在于仓库，已发布的版本可以在 GitHub Releases 里查看。标签形如 `vX.Y.Z`，与 `package.json` 的 `version` 一致，并对应 `CHANGELOG.md` 里的 `## X.Y.Z`。向仓库推送这样的标签后，发布工作流会再跑一遍检查，并用更新日志的对应小节创建 GitHub Release。
+
+省略 `#vX.Y.Z` 会安装 `main` 上的最新提交。后续合并会直接改变已安装的插件，因此只适合本地试改，不适合部署。
 
 pnpm 10 或更高版本可能会阻止 Git 依赖执行构建脚本。出现 `ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED` 时，可以在 DSH 插件安装界面选择“允许这些脚本并重试”，或者在 Web profile 的 `pnpm-workspace.yaml` 中加入：
 
@@ -41,6 +45,17 @@ allowBuilds:
 ```bash
 dsh web --port 3080
 ```
+
+### 回滚
+
+用上一枚已发布标签重新安装，然后重启 DSH Web。重新安装只更换代码；当前进程要重启后才会加载该版本。
+
+```bash
+dsh plugin --profile web add github:agi-redtea/dsh-weixin-web#vX.Y.Z
+dsh web --port 3080
+```
+
+`vX.Y.Z` 是要退回的标签，以 GitHub Releases 中的上一枚为准。例如当前部署是 `v0.3.0`，就把命令里的标签换成它的前一个版本，再执行 `dsh web`。
 
 ### 登录微信
 
